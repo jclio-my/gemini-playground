@@ -90,6 +90,7 @@ async function handleAPIRequest(req: Request): Promise<Response> {
 async function modifyModelName(req: Request): Promise<Request> {
   const modelMap: Record<string, string> = {
     'ge1206': 'gemini-exp-1206',
+    'gpt-4o': 'gemini-2.0-flash-exp',
     // 可以添加更多的模型映射
   };
 
