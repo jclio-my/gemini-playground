@@ -17,28 +17,25 @@ export default {
     }
 
     // 处理静态资源
-    if (url.pathname === '/' || url.pathname === '/index.html') {
-      console.log('Serving index.html',env);
-      return new Response(await env.__STATIC_CONTENT.get('index.html'), {
-        headers: {
-          'content-type': 'text/html;charset=UTF-8',
-        },
-      });
-    }
+    // if (url.pathname === '/' || url.pathname === '/index.html') {
+    //   console.log('Serving index.html',env);
+    //   return new Response(await env.__STATIC_CONTENT.get('index.html'), {
+    //     headers: {
+    //       'content-type': 'text/html;charset=UTF-8',
+    //     },
+    //   });
+    // }
 
-    // 处理其他静态资源
-    const asset = await env.__STATIC_CONTENT.get(url.pathname.slice(1));
-    if (asset) {
-      const contentType = getContentType(url.pathname);
-      return new Response(asset, {
-        headers: {
-          'content-type': contentType,
-        },
-      });
-    }
-
-
-
+    // // 处理其他静态资源
+    // const asset = await env.__STATIC_CONTENT.get(url.pathname.slice(1));
+    // if (asset) {
+    //   const contentType = getContentType(url.pathname);
+    //   return new Response(asset, {
+    //     headers: {
+    //       'content-type': contentType,
+    //     },
+    //   });
+    // }
     return new Response('Not found', { status: 404 });
   },
 };

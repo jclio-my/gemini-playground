@@ -100,31 +100,12 @@ async function handleRequest(req: Request): Promise<Response> {
   }
 
   // 静态文件处理
-  try {
-    let filePath = url.pathname;
-    if (filePath === '/' || filePath === '/index.html') {
-      filePath = '/index.html';
+  return new Response('Not Found', { 
+    status: 404,
+    headers: {
+      'content-type': 'text/plain;charset=UTF-8',
     }
-
-    const fullPath = `${Deno.cwd()}/src/static${filePath}`;
-
-    const file = await Deno.readFile(fullPath);
-    const contentType = getContentType(filePath);
-
-    return new Response(file, {
-      headers: {
-        'content-type': `${contentType};charset=UTF-8`,
-      },
-    });
-  } catch (e) {
-    console.error('Error details:', e);
-    return new Response('Not Found', { 
-      status: 404,
-      headers: {
-        'content-type': 'text/plain;charset=UTF-8',
-      }
-    });
-  }
+  });
 }
 
 Deno.serve(handleRequest); 
