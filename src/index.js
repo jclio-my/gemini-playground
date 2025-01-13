@@ -204,7 +204,9 @@ async function modifyModelName(req) {
   try {
     const contentType = req.headers.get('content-type');
     if (contentType && contentType.includes('application/json')) {
-      const body = await req.json();
+      // 克隆请求
+      const clonedReq = req.clone();
+      const body = await clonedReq.json();
       if (body && body.model) {
         const originalModel = body.model;
         if (modelMap[originalModel]) {
