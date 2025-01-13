@@ -91,7 +91,7 @@ async function modifyModelName(req: Request): Promise<Request> {
   const modelMap: Record<string, string> = {
     'gemini-1206': 'gemini-exp-1206',
     'gpt-4o': 'gemini-exp-1206',
-    'o1': 'gemini-exp-1206',
+    'gpt-4': 'gemini-exp-1206',
     // 可以添加更多的模型映射
   };
 
