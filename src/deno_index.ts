@@ -70,7 +70,10 @@ async function handleWebSocket(req: Request): Promise<Response> {
 async function handleAPIRequest(req: Request): Promise<Response> {
   try {
     const worker = await import('./api_proxy/worker.mjs');
-    return await worker.default.fetch(req);
+    
+    const modifiedRequest = await modifyModelName(req);
+    
+    return await worker.default.fetch(modifiedRequest);
   } catch (error) {
     console.error('API request error:', error);
     const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
@@ -82,6 +85,36 @@ async function handleAPIRequest(req: Request): Promise<Response> {
       }
     });
   }
+}
+
+async function modifyModelName(req: Request): Promise<Request> {
+  const modelMap: Record<string, string> = {
+    'ge1206': 'gemini-exp-1206',
+    // 可以添加更多的模型映射
+  };
+
+  try {
+    const contentType = req.headers.get('content-type');
+    if (contentType && contentType.includes('application/json')) {
+      const body = await req.json();
+      if (body && body.model) {
+        const originalModel = body.model;
+        if (modelMap[originalModel]) {
+          body.model = modelMap[originalModel];
+          console.log(`Model name modified from ${originalModel} to ${body.model}`);
+          const modifiedReq = new Request(req.url, {
+            method: req.method,
+            headers: req.headers,
+            body: JSON.stringify(body),
+          });
+          return modifiedReq;
+        }
+      }
+    }
+  } catch (error) {
+    console.error('Error modifying model name:', error);
+  }
+  return req;
 }
 
 async function handleRequest(req: Request): Promise<Response> {

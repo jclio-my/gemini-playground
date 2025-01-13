@@ -62,20 +62,7 @@ Mac/Linux 安装Deno:
 >deno run --allow-net --allow-read src/deno_index.ts
 
 
-## 使用方法
-### 多模态对话
-填入API Key, 点击Connect按钮即可对话。
-以下三个按钮分别是：
-- 启用麦克风
-- 启用摄像头
-- 分享屏幕
-<br>
 
-<details>
-   <summary>如图</summary>
-
-   ![image](/docs/images/2.png)
-</details>
 
 
 ### API 代理
@@ -88,41 +75,6 @@ API已经被代理为OpenAI格式，可以直接使用OpenAI格式的API。
 curl --location 'http://your.domain.com/v1/models' \
 --header 'Authorization: Bearer YOUR-GEMINI-API-KEY'
 ```
-
-#### 对话:
-```
-curl --location 'https://your.domain.com/v1/chat/completions' \
---header 'Authorization: Bearer YOUR-GEMINI-API-KEY' \
---header 'Content-Type: application/json' \
---data '{
-    "messages": [
-        {
-            "role": "system",
-            "content": "You are a test assistant."
-        },
-        {
-            "role": "user",
-            "content": "Testing. Just say hi and nothing else."
-        }
-    ],
-    "model": "gemini-2.0-flash-exp"
-}'
-```
-### ChatBOX：
-   <details>
-   <summary>如图</summary>
-   
-   ![image](/docs/images/4.png)
-   </details>
-
-### Cursor编程：
-   <details>
-   <summary>如图</summary>
-   
-   ![image](/docs/images/5.png)
-   </details>
-
-
 
 ## 致谢/引用：
 
