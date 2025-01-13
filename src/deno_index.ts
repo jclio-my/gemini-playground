@@ -108,6 +108,8 @@ async function modifyModelName(req: Request): Promise<Request> {
             headers: req.headers,
             body: JSON.stringify(body),
           });
+          
+          (modifiedReq as any)._body = body;
           return modifiedReq;
         }
       }

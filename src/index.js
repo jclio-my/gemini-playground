@@ -217,6 +217,9 @@ async function modifyModelName(req) {
             headers: req.headers,
             body: JSON.stringify(body), // 使用修改后的 body
           });
+          
+          // 将解析后的 body 存储在 request 对象中
+          (modifiedReq as any)._body = body;
           return modifiedReq;
         }
       }

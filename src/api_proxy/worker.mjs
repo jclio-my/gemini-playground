@@ -25,11 +25,13 @@ export default {
       switch (true) {
         case pathname.endsWith("/chat/completions"):
           assert(request.method === "POST");
-          return handleCompletions(await request.json(), apiKey)
+          const completionsBody = await getRequestBody(request);
+          return handleCompletions(completionsBody, apiKey)
             .catch(errHandler);
         case pathname.endsWith("/embeddings"):
           assert(request.method === "POST");
-          return handleEmbeddings(await request.json(), apiKey)
+          const embeddingsBody = await getRequestBody(request);
+          return handleEmbeddings(embeddingsBody, apiKey)
             .catch(errHandler);
         case pathname.endsWith("/models"):
           assert(request.method === "GET");
@@ -452,5 +454,19 @@ async function toOpenAiStreamFlush (controller) {
       controller.enqueue(transform(data, "stop"));
     }
     controller.enqueue("data: [DONE]" + delimiter);
+  }
+}
+
+async function getRequestBody(request) {
+  try {
+    if (request._body) {
+      return request._body;
+    }
+    const body = await request.json();
+    request._body = body;
+    return body;
+  } catch (error) {
+    console.error('Error parsing request body:', error);
+    throw new HttpError('Invalid request body', 400);
   }
 }
