@@ -210,10 +210,12 @@ async function modifyModelName(req) {
         if (modelMap[originalModel]) {
           body.model = modelMap[originalModel];
           console.log(`Model name modified from ${originalModel} to ${body.model}`);
+          
+          // 创建一个新的 Request 对象
           const modifiedReq = new Request(req.url, {
             method: req.method,
             headers: req.headers,
-            body: JSON.stringify(body),
+            body: JSON.stringify(body), // 使用修改后的 body
           });
           return modifiedReq;
         }

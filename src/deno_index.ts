@@ -102,6 +102,7 @@ async function modifyModelName(req: Request): Promise<Request> {
         if (modelMap[originalModel]) {
           body.model = modelMap[originalModel];
           console.log(`Model name modified from ${originalModel} to ${body.model}`);
+          
           const modifiedReq = new Request(req.url, {
             method: req.method,
             headers: req.headers,
